@@ -1,4 +1,9 @@
+'use client';
+
 import { ReactNode } from 'react';
+
+import { Provider } from 'react-redux';
+import { store } from '@/state/store';
 
 import '@/styles/global.scss';
 
@@ -9,7 +14,9 @@ type ChildrenProps = {
 export default function RootLayout({ children }: ChildrenProps) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <Provider store={store}>
+        <body>{children}</body>
+      </Provider>
     </html>
   );
 }
