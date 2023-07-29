@@ -11,9 +11,9 @@ export default function Home() {
   const { user } = useContext(UserContext);
 
   return (
-    <main className="">
+    <main className="font-jost">
       <div className="text-center">
-        <h1>Boilerplate</h1>
+        <h1 className="text-primary-second">Boilerplate</h1>
       </div>
     </main>
   );
