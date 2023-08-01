@@ -12,9 +12,7 @@ export default function Home() {
 
   return (
     <main className="font-jost">
-      <div className="text-center">
-        <h1 className="text-primary-second">Boilerplate</h1>
-      </div>
+      <div className="bg-red-500"></div>
     </main>
   );
 }

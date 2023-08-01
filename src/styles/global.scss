@@ -4,3 +4,15 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+@import './partials/Header';
+
+h1 {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 13px;
+  font-weight: 500;
+}

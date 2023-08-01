@@ -12,29 +12,33 @@ module.exports = {
     extend: {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       fontFamily: {
         jost: ['var(--font-jost)', ...fontFamily.sans],
       },
-    },
-    colors: {
-      primary: {
-        first: '#ad1fea',
-        second: '#4661e6',
-        third: '#4661e6',
-        fourth: '#ffffff',
-      },
-      secondary: {
-        first: '#f2f4ff',
-        second: '#f7f8fd',
-        third: '#3a4374',
-        fourth: '#647196',
-      },
-      tertiary: {
-        first: '#f49f85',
-        second: '#62bccfa',
+      colors: {
+        primary: {
+          first: '#ad1fea',
+          second: '#4661e6',
+          third: '#4661e6',
+          fourth: '#ffffff',
+        },
+        secondary: {
+          first: '#f2f4ff',
+          second: '#f7f8fd',
+          third: '#3a4374',
+          fourth: '#647196',
+        },
+        tertiary: {
+          first: '#f49f85',
+          second: '#62bccfa',
+          third: '#E84D70',
+          fourth: '#A337F6',
+          fifth: '#28A7ED',
+        },
+        fourth: {
+          first: '#373F68',
+        },
       },
     },
   },
