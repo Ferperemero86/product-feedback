@@ -9,7 +9,8 @@ import { store } from '@/state/store';
 import UserProvider from '@/contexts/UserContext';
 
 import Header from '@/components/layout/Header';
-import Features from '@/components/filters/Features';
+import Features from '@/components/filters/FeaturesFilter';
+import StatusFilter from '@/components/filters/StatusFilter';
 
 import '@/styles/global.scss';
 
@@ -24,8 +25,9 @@ interface ChildrenProps {
 
 const MobileFilters = () => {
   return (
-    <div className="py-8 bg-secondary-second w-full">
+    <div className="py-8 bg-secondary-second w-11/12 h-full absolute right-0">
       <Features />
+      <StatusFilter customStyles="mt-10" />
     </div>
   );
 };

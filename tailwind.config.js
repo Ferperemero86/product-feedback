@@ -31,7 +31,7 @@ module.exports = {
         },
         tertiary: {
           first: '#f49f85',
-          second: '#62bccfa',
+          second: '#62bcfa',
           third: '#E84D70',
           fourth: '#A337F6',
           fifth: '#28A7ED',
