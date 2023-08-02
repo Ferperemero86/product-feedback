@@ -1,4 +1,8 @@
-export default function Features() {
+interface Props {
+  customStyles: string;
+}
+
+export default function Features({ customStyles }: Props) {
   const features = [
     { type: 'all', text: 'All' },
     { type: 'ui', text: 'UI' },
@@ -23,9 +27,5 @@ export default function Features() {
     });
   };
 
-  return (
-    <div className="bg-white w-11/12 mx-auto rounded-lg p-5 max-w-sm">
-      {displayFeatures()}
-    </div>
-  );
+  return <div className={`${customStyles}`}>{displayFeatures()}</div>;
 }

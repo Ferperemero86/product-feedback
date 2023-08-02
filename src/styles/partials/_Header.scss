@@ -1,4 +1,15 @@
 .header {
+  &-heading {
+    @media (min-width: 1024px) {
+      background-image: radial-gradient(
+        166.82% 166.82% at 103.9% -10.39%,
+        #e84d70 0%,
+        #a337f6 53.09%,
+        #28a7ed 100%
+      );
+    }
+  }
+
   background-image: radial-gradient(
     166.82% 166.82% at 103.9% -10.39%,
     #e84d70 0%,

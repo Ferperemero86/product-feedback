@@ -1,0 +1,9 @@
+.hidden-filters {
+  transform: translateX(-120%);
+  transition: all 400ms;
+}
+
+.show-filters {
+  transform: translateX(0);
+  transition: all 400ms;
+}

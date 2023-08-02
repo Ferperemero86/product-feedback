@@ -6,9 +6,7 @@ interface Props {
 
 export default function StatusFilter({ customStyles }: Props) {
   return (
-    <div
-      className={`${customStyles} bg-white w-11/12 mx-auto rounded-lg p-5 max-w-sm`}
-    >
+    <div className={`${customStyles}`}>
       <div className="flex justify-between">
         <p className="font-bold text-secondary-third">Roadmap</p>
         <Link href="/" className="text-primary-second font-semibold underline">
