@@ -8,4 +8,6 @@ export type User = {
   LoggedIn: boolean;
 };
 
+export type NavDisplayState = boolean;
+
 export type OnClickDivHandler = (event: MouseEvent<HTMLDivElement>) => void;

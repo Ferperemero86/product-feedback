@@ -7,11 +7,17 @@ import Button from '@/components/form/Button';
 import Features from '@/components/filters/FeaturesFilter';
 import StatusFilter from '@/components/filters/StatusFilter';
 
-type NavDisplayState = boolean;
+import { NavDisplayState } from '@/state/types';
 
-const Filters = () => {
+interface FiltersProps {
+  customStyles: string;
+}
+
+const Filters = ({ customStyles }: FiltersProps) => {
   return (
-    <div className="py-8 bg-secondary-second w-11/12 h-full absolute top-[122px] right-0 md:static md:flex md:py-0 lg:flex-col lg:w-full lg:py-5">
+    <div
+      className={`${customStyles} py-8 bg-secondary-second w-11/12 absolute top-[122px] right-0 md:static md:flex md:py-0 lg:flex-col lg:w-full lg:py-5`}
+    >
       <Features customStyles="bg-white w-11/12 mx-auto rounded-lg p-5 lg:w-full" />
       <StatusFilter customStyles="bg-white w-11/12 mx-auto rounded-lg p-5 mt-10 md:mt-0 md:ml-3 lg:mx-auto lg:mt-5 lg:w-full" />
     </div>
@@ -20,6 +26,8 @@ const Filters = () => {
 
 export default function Header() {
   const [isNavDisplay, setNavDisplay] = useState<NavDisplayState>(false);
+
+  const navDisplayStyles = isNavDisplay ? 'show-filters' : 'hidden-filters';
 
   const toggleNavDisplay = () => {
     setNavDisplay((prevState) => !prevState);
@@ -36,7 +44,7 @@ export default function Header() {
         </div>
         {isNavDisplay && <CloseIcon onClick={toggleNavDisplay} />}
         {!isNavDisplay && <Burger onClick={toggleNavDisplay} />}
-        <Filters />
+        <Filters customStyles={`${navDisplayStyles}`} />
       </div>
       <div className="bg-fourth-first flex justify-between items-center py-3 px-6 lg:absolute lg:w-3/5 lg:right-0 lg:rounded-lg">
         <div className="flex items-center">
