@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '@/state/store';
 
-import { Feedback } from '@/state/types';
+import { Feedback, FeedbacksPayload } from '@/state/types';
 
 interface InitialState {
   feedbacks: Feedback[];
@@ -15,10 +15,14 @@ export const feedbacksSlice = createSlice({
   name: 'feedbacks',
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
-  reducers: {},
+  reducers: {
+    updateFeedbacks: (state, action: PayloadAction<FeedbacksPayload>) => {
+      state.feedbacks = action.payload;
+    },
+  },
 });
 
-export const {} = feedbacksSlice.actions;
+export const { updateFeedbacks } = feedbacksSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const select = (state: RootState) => state.feedbacksSlice;
