@@ -1,12 +1,25 @@
 import { MouseEvent } from 'react';
 
+export type PostUser = {
+  image: string;
+  name: string;
+  username: string;
+};
+
+export type Comment = {
+  id: number;
+  content: string;
+  user: PostUser;
+};
+
 export type Feedback = {
   id: number;
   title: string;
   description: string;
-  feature: string;
+  category: string;
+  status: string;
   upvotes: number;
-  comments: number;
+  comments?: Comment[];
 };
 
 export type User = {

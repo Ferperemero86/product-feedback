@@ -39,11 +39,12 @@ export default function Home() {
       setMainBg('');
       setFullBg('');
     }
-    console.log('mainBg', isNavShowing, mainBg);
   };
 
   useEffect(() => {
-    dispatch(updateFeedbacks(data));
+    const feedbacks = data.productRequests;
+    console.log(data);
+    dispatch(updateFeedbacks(feedbacks));
   }, []);
 
   return (
