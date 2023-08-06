@@ -7,7 +7,8 @@ import Button from '@/components/form/Button';
 import Features from '@/components/filters/FeaturesFilter';
 import StatusFilter from '@/components/filters/StatusFilter';
 
-import { NavDisplayState } from '@/state/types';
+import { NavDisplayState, OnClickDivHandler } from '@/state/types';
+import { Head } from 'next/document';
 
 interface FiltersProps {
   customStyles: string;
@@ -24,13 +25,20 @@ const Filters = ({ customStyles }: FiltersProps) => {
   );
 };
 
-export default function Header() {
+interface HeaderProps {
+  onClick: (isNavShowing: boolean) => void;
+}
+
+export default function Header({ onClick }: HeaderProps) {
   const [isNavDisplay, setNavDisplay] = useState<NavDisplayState>(false);
 
   const navDisplayStyles = isNavDisplay ? 'show-filters' : 'hidden-filters';
 
   const toggleNavDisplay = () => {
-    setNavDisplay((prevState) => !prevState);
+    const updatedNavDisplay = !isNavDisplay;
+
+    setNavDisplay(updatedNavDisplay);
+    onClick(updatedNavDisplay);
   };
 
   return (
@@ -44,7 +52,9 @@ export default function Header() {
         </div>
         {isNavDisplay && <CloseIcon onClick={toggleNavDisplay} />}
         {!isNavDisplay && <Burger onClick={toggleNavDisplay} />}
-        <Filters customStyles={`${navDisplayStyles}`} />
+        <Filters
+          customStyles={`${navDisplayStyles}  min-h-full md:min-height: 0`}
+        />
       </div>
       <div className="bg-fourth-first flex justify-between items-center py-3 px-6 lg:absolute lg:w-3/5 lg:right-0 lg:rounded-lg">
         <div className="flex items-center">

@@ -1,5 +1,5 @@
 'use client';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { select } from '@/state/reducers/feedbacksSlice';
 
@@ -18,7 +18,7 @@ const FeedBacks = () => {
   return feedbacks.map((feedback, idx) => {
     return (
       <FeedbackPanel
-        customStyles="w-11/12 mx-auto lg:absolute lg:right-0 lg:w-3/5"
+        customStyles="w-11/12 mt-5 mx-auto lg:w-full lg:mt-5"
         feedback={feedback}
         key={idx}
       />
@@ -28,15 +28,33 @@ const FeedBacks = () => {
 
 export default function Home() {
   const dispatch = useAppDispatch();
+  const [mainBg, setMainBg] = useState<string>('');
+  const [fullBg, setFullBg] = useState<string>('');
+
+  const showDarkBg = (isNavShowing: boolean) => {
+    if (isNavShowing) {
+      setMainBg('bg-black z-50');
+      setFullBg('max-h-screen overflow-hidden');
+    } else {
+      setMainBg('');
+      setFullBg('');
+    }
+    console.log('mainBg', isNavShowing, mainBg);
+  };
 
   useEffect(() => {
     dispatch(updateFeedbacks(data));
   }, []);
 
   return (
-    <main className="font-jost min-h-screen lg:w-11/12 lg:max-w-7xl lg:mx-auto">
-      <Header />
-      <div className="mt-5 lg:relative lg:top-28">
+    <main
+      className={`${fullBg} font-jost pb-14 min-h-screen lg:w-11/12 lg:relative lg:max-w-7xl lg:-translate-x-1/2 lg:left-1/2`}
+    >
+      <Header onClick={showDarkBg} />
+      <div
+        className={`${mainBg} absolute h-full w-full z-50 bg-opacity-50 md:hidden`}
+      ></div>
+      <div className="w-11/12 mx-auto mt-5 lg:static lg:ml-auto lg:m-0 lg:pt-20 lg:w-3/5">
         <FeedBacks />
       </div>
     </main>

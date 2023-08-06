@@ -1,13 +1,17 @@
 .hidden-filters {
   @media (max-width: 767px) {
-    transform: translateX(-120%);
-    transition: all 400ms;
+    right: 120%;
+    transition: left 1ms;
+    z-index: 9999;
   }
 }
 
 .show-filters {
   @media (max-width: 767px) {
-    transform: translateX(0);
+    right: 0;
+    opacity: 1;
+    visibility: visible;
     transition: all 400ms;
+    z-index: 9999;
   }
 }
