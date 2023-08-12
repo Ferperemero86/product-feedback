@@ -1,5 +1,7 @@
 'use client';
-import { useContext, useEffect, useState } from 'react';
+
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 import { select } from '@/state/reducers/feedbacksSlice';
 
@@ -17,33 +19,34 @@ const FeedBacks = () => {
 
   return feedbacks.map((feedback, idx) => {
     return (
-      <FeedbackPanel
-        customStyles="w-11/12 mt-5 mx-auto lg:w-full lg:mt-5"
-        feedback={feedback}
-        key={idx}
-      />
+      <Link href={`/post/${feedback.id}`} key={idx}>
+        <FeedbackPanel
+          customStyles="w-11/12 mt-5 mx-auto lg:w-full lg:mt-5"
+          feedback={feedback}
+          key={idx}
+        />
+      </Link>
     );
   });
 };
 
 export default function Home() {
   const dispatch = useAppDispatch();
-  const [mainBg, setMainBg] = useState<string>('');
+  const [mainBg, setMainBg] = useState<string>('hidden');
   const [fullBg, setFullBg] = useState<string>('');
 
   const showDarkBg = (isNavShowing: boolean) => {
     if (isNavShowing) {
-      setMainBg('bg-black z-50');
+      setMainBg('bg-black z-50 block');
       setFullBg('max-h-screen overflow-hidden');
     } else {
-      setMainBg('');
+      setMainBg('hidden');
       setFullBg('');
     }
   };
 
   useEffect(() => {
     const feedbacks = data.productRequests;
-    console.log(data);
     dispatch(updateFeedbacks(feedbacks));
   }, []);
 

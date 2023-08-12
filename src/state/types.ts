@@ -10,6 +10,17 @@ export type Comment = {
   id: number;
   content: string;
   user: PostUser;
+  replies: Reply[];
+};
+
+export type CommentParams = {
+  id: string;
+};
+
+export type Reply = {
+  content: string;
+  replyingTo: string;
+  user: PostUser;
 };
 
 export type Feedback = {
