@@ -7,10 +7,10 @@ export type PostUser = {
 };
 
 export type Comment = {
-  id: number;
+  id?: number;
   content: string;
   user: PostUser;
-  replies: Reply[];
+  replies?: Reply[];
 };
 
 export type CommentParams = {
