@@ -29,7 +29,7 @@ export type Feedback = {
   description: string;
   category: string;
   status: string;
-  upvotes: number;
+  upvotes?: number;
   comments?: Comment[];
 };
 

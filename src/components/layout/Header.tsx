@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import Burger from '@/components/Burger';
 import CloseIcon from '@/components/CloseIcon';
@@ -7,8 +7,7 @@ import Button from '@/components/form/Button';
 import Features from '@/components/filters/FeaturesFilter';
 import StatusFilter from '@/components/filters/StatusFilter';
 
-import { NavDisplayState, OnClickDivHandler } from '@/state/types';
-import { Head } from 'next/document';
+import { NavDisplayState } from '@/state/types';
 
 interface FiltersProps {
   customStyles: string;
@@ -17,7 +16,7 @@ interface FiltersProps {
 const Filters = ({ customStyles }: FiltersProps) => {
   return (
     <div
-      className={`${customStyles} py-8 bg-secondary-second w-11/12 absolute top-[122px] right-0 md:static md:flex md:py-0 lg:flex-col lg:w-full lg:py-5`}
+      className={`${customStyles} py-8 bg-secondary-second w-11/12 absolute top-[138px] right-0 md:static md:flex md:py-0 lg:flex-col lg:w-full lg:py-5`}
     >
       <Features customStyles="bg-white w-11/12 mx-auto rounded-lg p-5 lg:w-full" />
       <StatusFilter customStyles="bg-white w-11/12 mx-auto rounded-lg p-5 mt-10 md:mt-0 md:ml-3 lg:mx-auto lg:mt-5 lg:w-full" />
@@ -26,20 +25,31 @@ const Filters = ({ customStyles }: FiltersProps) => {
 };
 
 interface HeaderProps {
-  onClick: (isNavShowing: boolean) => void;
+  //showDarkBg: () => void;
+  //hideDarkBg: () => void;
+  showForm: () => void;
 }
 
-export default function Header({ onClick }: HeaderProps) {
+export default function Header({
+  //showDarkBg,
+  //hideDarkBg,
+  showForm,
+}: HeaderProps) {
   const [isNavDisplay, setNavDisplay] = useState<NavDisplayState>(false);
 
   const navDisplayStyles = isNavDisplay ? 'show-filters' : 'hidden-filters';
 
   const toggleNavDisplay = () => {
-    const updatedNavDisplay = !isNavDisplay;
-
-    setNavDisplay(updatedNavDisplay);
-    onClick(updatedNavDisplay);
+    setNavDisplay((prevState) => !prevState);
   };
+
+  //useEffect(() => {
+  //  if (isNavDisplay) {
+  //    showDarkBg();
+  //  } else {
+  //    hideDarkBg();
+  //  }
+  //});
 
   return (
     <header className="header md:rounded-lg lg:relative">
@@ -63,6 +73,7 @@ export default function Header({ onClick }: HeaderProps) {
         </div>
         <div className="flex items-center">
           <Button
+            onClick={showForm}
             customStyles="bg-primary-first rounded-lg px-4 py-2 text-white font-bold text-xs"
             text="+ Add Feedback"
           />

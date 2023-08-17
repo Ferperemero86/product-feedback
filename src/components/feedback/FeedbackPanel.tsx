@@ -25,7 +25,7 @@ export default function FeedbackPanel({ customStyles, feedback }: Props) {
         <div className="flex">
           <Image src="/images/message-icon.svg" width={18} height={16} alt="" />
           <span className="text-secondary-third font-bold ml-2">
-            {comments && comments.length}
+            {comments ? comments.length : 0}
           </span>
         </div>
       </div>

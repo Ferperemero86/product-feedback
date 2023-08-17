@@ -1,12 +1,23 @@
+import { ChangeEvent } from 'react';
+
 interface Props {
   customStyles: string;
+  options?: string[];
+  onChange?: (event: ChangeEvent<HTMLSelectElement>) => void;
 }
 
-export default function SelectField({ customStyles }: Props) {
+export default function SelectField({
+  customStyles,
+  options,
+  onChange,
+}: Props) {
   return (
-    <select className={`${customStyles}`}>
-      <option className="text-black">Most Upvotes</option>
-      <option className="text-black">least Upvotes</option>
+    <select className={`${customStyles} h-12`} onChange={onChange}>
+      {options?.map((option, idx) => (
+        <option className="text-black" key={idx}>
+          {option}
+        </option>
+      ))}
     </select>
   );
 }

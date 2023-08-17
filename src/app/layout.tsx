@@ -24,7 +24,9 @@ export default function RootLayout({ children }: ChildrenProps) {
     <html lang="en">
       <UserProvider>
         <Provider store={store}>
-          <body className={`${jost.variable} bg-secondary-second`}>
+          <body
+            className={`${jost.variable} bg-secondary-second overflow-x-hidden`}
+          >
             {children}
           </body>
         </Provider>

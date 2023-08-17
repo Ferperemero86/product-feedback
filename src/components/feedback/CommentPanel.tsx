@@ -9,7 +9,7 @@ interface PanelProps {
   comment: Comment;
 }
 
-const Panel = ({comment, customStyles}: PanelProps) => {
+const Panel = ({ comment, customStyles }: PanelProps) => {
   const { content, user, replies } = comment;
   return (
     <div className={`${customStyles}  bg-white p-5 rounded-md`}>
@@ -19,7 +19,11 @@ const Panel = ({comment, customStyles}: PanelProps) => {
           width={40}
           height={40}
           alt="User image"
-          style={{ borderRadius: '50%',alignSelf: 'baseline', marginRight: '1rem' }}
+          style={{
+            borderRadius: '50%',
+            alignSelf: 'baseline',
+            marginRight: '1rem',
+          }}
         />
         <div className="ml-2">
           <p className="text-secondary-third font-bold text-sm">{user.name}</p>
@@ -32,18 +36,18 @@ const Panel = ({comment, customStyles}: PanelProps) => {
         />
       </div>
     </div>
-  )
+  );
 };
 
 interface RepliesProps {
   replies: Reply[];
 }
 
-const Replies = ({replies}: RepliesProps) => {
-  return replies?.map((reply) => {
-    return <Panel comment={reply} />
-  }) 
-}
+const Replies = ({ replies }: RepliesProps) => {
+  return replies?.map((reply, idx) => {
+    return <Panel comment={reply} key={idx} />;
+  });
+};
 
 interface CommentProps {
   customStyles?: string;
@@ -56,9 +60,7 @@ export default function CommentPanel({ customStyles, comment }: CommentProps) {
   return (
     <>
       <Panel customStyles={customStyles} comment={comment} />
-      <div className="pl-10">
-        {replies && <Replies replies={replies} />}
-      </div>
+      <div className="pl-10">{replies && <Replies replies={replies} />}</div>
     </>
   );
 }
