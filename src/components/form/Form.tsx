@@ -88,16 +88,17 @@ export default function Form({
   cancelForm,
 }: FormProps) {
   const categoriesList = ['UI', 'UX', 'Enhancement', 'Bug', 'Feature'];
-  const statusList = ['Planned', 'In-Progress', 'Live'];
+  const statusList = ['planned', 'in-progress', 'live'];
   const formTitle = feedback?.title ? feedback.title : 'Create New Feedback';
+  const formDescription = feedback?.description ? feedback.description : '';
   const { push } = useRouter();
 
   const dispatch = useAppDispatch();
   const { feedbacks } = useAppSelector(select);
-  const [title, setTitle] = useState<string>('');
+  const [title, setTitle] = useState<string>(formTitle);
   const [category, setCategory] = useState<string>(categoriesList[0]);
   const [status, setStatus] = useState<string>(statusList[0]);
-  const [description, setDescription] = useState<string>('');
+  const [description, setDescription] = useState<string>(formDescription);
 
   const addTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(() => e.target.value);
@@ -144,7 +145,7 @@ export default function Form({
     e.preventDefault();
 
     const newFeedback = {
-      id: feedbacks.length,
+      id: feedbacks.length + 1,
       title,
       category,
       status,

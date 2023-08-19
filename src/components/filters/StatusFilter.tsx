@@ -9,7 +9,10 @@ export default function StatusFilter({ customStyles }: Props) {
     <div className={`${customStyles}`}>
       <div className="flex justify-between">
         <p className="font-bold text-secondary-third">Roadmap</p>
-        <Link href="/" className="text-primary-second font-semibold underline">
+        <Link
+          href="/roadmap"
+          className="text-primary-second font-semibold underline"
+        >
           View
         </Link>
       </div>

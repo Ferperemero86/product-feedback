@@ -35,16 +35,16 @@ const FeedBacks = () => {
 export default function Home() {
   const dispatch = useAppDispatch();
   const { feedbacks } = useAppSelector(select);
-  const [isEditFormShowing, setEditFormShowing] = useState<boolean>(false);
+  const [isFormShowing, setFormShowing] = useState<boolean>(false);
 
   const showForm = () => {
-    setEditFormShowing(() => true);
+    setFormShowing(() => true);
   };
 
   const cancelForm = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    setEditFormShowing(() => false);
+    setFormShowing(() => false);
   };
 
   useEffect(() => {
@@ -58,14 +58,14 @@ export default function Home() {
   return (
     <main className="relative font-jost pb-14 min-h-screen lg:w-11/12 lg:max-w-7xl lg:-translate-x-1/2 lg:left-1/2">
       <Header showForm={showForm} />
-      {isEditFormShowing && (
+      {isFormShowing && (
         <Form
           cancelForm={cancelForm}
           customStyles="bg-white w-11/12 absolute -translate-x-1/2  left-1/2 lg:top-14 z-50"
           type="create"
         />
       )}
-      {isEditFormShowing && <ModalBg />}
+      {isFormShowing && <ModalBg />}
       <div className="w-11/12 mx-auto mt-5 lg:static lg:ml-auto lg:m-0 lg:pt-20 lg:w-3/5">
         <FeedBacks />
       </div>
