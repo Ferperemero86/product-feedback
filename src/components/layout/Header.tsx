@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 
+import { useAppSelector, useAppDispatch } from '@/state/hooks';
+import { select, updateFeedbacks } from '@/state/reducers/feedbacksSlice';
+
 import Burger from '@/components/Burger';
 import CloseIcon from '@/components/CloseIcon';
 import SelectField from '@/components/form/SelectField';
@@ -7,7 +10,10 @@ import Button from '@/components/form/Button';
 import Features from '@/components/filters/FeaturesFilter';
 import StatusFilter from '@/components/filters/StatusFilter';
 
-import { NavDisplayState } from '@/state/types';
+import { NavDisplayState, Feedback } from '@/state/types';
+import { useDispatch } from 'react-redux';
+
+import { data } from '../../../data';
 
 interface FiltersProps {
   customStyles: string;
@@ -30,6 +36,8 @@ interface HeaderProps {
 
 export default function Header({ showForm }: HeaderProps) {
   const [isNavDisplay, setNavDisplay] = useState<NavDisplayState>(false);
+  const { feedbacks } = useAppSelector(select);
+  const dispatch = useDispatch();
 
   const options = [
     { label: 'Most Upvotes', value: 'Most Upvotes' },
@@ -42,6 +50,56 @@ export default function Header({ showForm }: HeaderProps) {
   const toggleNavDisplay = () => {
     setNavDisplay((prevState) => !prevState);
   };
+
+  const sortFeedbacks = (label: string) => {
+    const selectedLabel = label.toLowerCase();
+
+    if (selectedLabel === 'least upvotes') {
+      if (feedbacks) {
+        const sortedFeedbacks = feedbacks
+          .slice()
+          .sort((a, b) => (a.upvotes ?? 0) - (b.upvotes ?? 0));
+
+        dispatch(updateFeedbacks(sortedFeedbacks));
+      }
+    } else if (selectedLabel === 'most upvotes') {
+      if (feedbacks) {
+        const sortedFeedbacks = feedbacks
+          .slice()
+          .sort((a, b) => (b.upvotes ?? 0) - (a.upvotes ?? 0));
+
+        dispatch(updateFeedbacks(sortedFeedbacks));
+      }
+    } else if (selectedLabel === 'least comments') {
+      if (feedbacks) {
+        const sortedFeedbacks = feedbacks
+          .slice()
+          .sort(
+            (a, b) => (a.comments?.length ?? 0) - (b.comments?.length ?? 0),
+          );
+        dispatch(updateFeedbacks(sortedFeedbacks));
+      }
+    } else if (selectedLabel === 'most comments') {
+      if (feedbacks) {
+        const sortedFeedbacks = feedbacks
+          .slice()
+          .sort(
+            (a, b) => (b.comments?.length ?? 0) - (a.comments?.length ?? 0),
+          );
+        dispatch(updateFeedbacks(sortedFeedbacks));
+      }
+    }
+  };
+
+  useEffect(() => {
+    const feedbacksData = data.productRequests
+      .slice()
+      .sort((a, b) => (b.upvotes ?? 0) - (a.upvotes ?? 0));
+
+    if (feedbacks.length === 0) {
+      dispatch(updateFeedbacks(feedbacksData));
+    }
+  }, []);
 
   return (
     <header className="header md:rounded-lg lg:relative">
@@ -64,6 +122,7 @@ export default function Header({ showForm }: HeaderProps) {
           <SelectField
             customStyles="ml-2 bg-transparent text-white font-bold text-xs"
             options={options}
+            sortFeedbacks={sortFeedbacks}
           />
         </div>
         <div className="flex items-center">

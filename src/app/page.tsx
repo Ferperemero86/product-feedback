@@ -12,10 +12,6 @@ import FeedbackPanel from '@/components/feedback/FeedbackPanel';
 import Form from '@/components/form/Form';
 import ModalBg from '@/components/ModalBg';
 
-import { updateFeedbacks } from '@/state/reducers/feedbacksSlice';
-
-import { data } from '../../data';
-
 const FeedBacks = () => {
   const { feedbacks } = useAppSelector(select);
 
@@ -33,8 +29,6 @@ const FeedBacks = () => {
 };
 
 export default function Home() {
-  const dispatch = useAppDispatch();
-  const { feedbacks } = useAppSelector(select);
   const [isFormShowing, setFormShowing] = useState<boolean>(false);
 
   const showForm = () => {
@@ -46,14 +40,6 @@ export default function Home() {
 
     setFormShowing(() => false);
   };
-
-  useEffect(() => {
-    const feedbacksData = data.productRequests;
-
-    if (feedbacks.length === 0) {
-      dispatch(updateFeedbacks(feedbacksData));
-    }
-  }, []);
 
   return (
     <main className="relative font-jost pb-14 min-h-screen lg:w-11/12 lg:max-w-7xl lg:-translate-x-1/2 lg:left-1/2">

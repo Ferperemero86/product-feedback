@@ -4,6 +4,7 @@ import { useState, MouseEvent } from 'react';
 interface SelectFieldProps {
   customStyles?: string;
   options: FilterFeedback[];
+  sortFeedbacks: (label: string) => void;
 }
 
 interface OptionsProps {
@@ -19,7 +20,9 @@ const Options = ({ options, selectOption }: OptionsProps) => {
         onClick={() => selectOption(option.label)}
         key={option.label}
       >
-        {option.label}
+        <span className="font-normal text-secondary-fourth">
+          {option.label}
+        </span>
       </li>
     );
   });
@@ -28,6 +31,7 @@ const Options = ({ options, selectOption }: OptionsProps) => {
 export default function SelectField({
   customStyles,
   options,
+  sortFeedbacks,
 }: SelectFieldProps) {
   const [selected, setSelected] = useState<string>(options[0].label);
   const [isOptionsActive, setOptionsActive] = useState<boolean>(false);
@@ -39,6 +43,7 @@ export default function SelectField({
   const selectOption = (label: string) => {
     setSelected(label);
     setOptionsActive(false);
+    sortFeedbacks(label);
     console.log(label);
   };
 
