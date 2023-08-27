@@ -26,12 +26,13 @@ p {
   color: #647196;
 }
 
-.up-arrow {
-  border-bottom: 2px solid;
-  border-right: 2px solid;
-  display: inline-block;
-  width: 0.5rem;
-  height: 0.5rem;
-  color: #4661e6;
-  transform: rotate(-135deg);
+.arrow {
+  box-sizing: border-box;
+  height: 5px;
+  width: 5px;
+  border-style: solid;
+  border-color: white;
+  border-width: 0px 1px 1px 0px;
+  transform: rotate(45deg);
+  transition: border-width 150ms ease-in-out;
 }

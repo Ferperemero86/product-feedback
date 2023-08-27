@@ -37,6 +37,11 @@ export type User = {
   LoggedIn: boolean;
 };
 
+export type FilterFeedback = {
+  label: string;
+  value: string;
+};
+
 export type NavDisplayState = boolean;
 
 export type FeedbacksPayload = Feedback[];

@@ -25,31 +25,23 @@ const Filters = ({ customStyles }: FiltersProps) => {
 };
 
 interface HeaderProps {
-  //showDarkBg: () => void;
-  //hideDarkBg: () => void;
   showForm: () => void;
 }
 
-export default function Header({
-  //showDarkBg,
-  //hideDarkBg,
-  showForm,
-}: HeaderProps) {
+export default function Header({ showForm }: HeaderProps) {
   const [isNavDisplay, setNavDisplay] = useState<NavDisplayState>(false);
 
+  const options = [
+    { label: 'Most Upvotes', value: 'Most Upvotes' },
+    { label: 'Least Upvotes', value: 'Least Upvotes' },
+    { label: 'Most Comments', value: 'Most Comments' },
+    { label: 'Least Comments', value: 'Least Comments' },
+  ];
   const navDisplayStyles = isNavDisplay ? 'show-filters' : 'hidden-filters';
 
   const toggleNavDisplay = () => {
     setNavDisplay((prevState) => !prevState);
   };
-
-  //useEffect(() => {
-  //  if (isNavDisplay) {
-  //    showDarkBg();
-  //  } else {
-  //    hideDarkBg();
-  //  }
-  //});
 
   return (
     <header className="header md:rounded-lg lg:relative">
@@ -69,7 +61,10 @@ export default function Header({
       <div className="bg-fourth-first flex justify-between items-center py-3 px-6 lg:absolute lg:w-3/5 lg:right-0 lg:rounded-lg">
         <div className="flex items-center">
           <label className="text-white text-xs">Sort by:</label>
-          <SelectField customStyles="ml-2 bg-transparent text-white font-bold text-xs" />
+          <SelectField
+            customStyles="ml-2 bg-transparent text-white font-bold text-xs"
+            options={options}
+          />
         </div>
         <div className="flex items-center">
           <Button
