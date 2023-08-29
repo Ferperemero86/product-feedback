@@ -1,31 +1,41 @@
 'use client';
 
-import { useEffect, useState, MouseEvent } from 'react';
+import { useState, MouseEvent } from 'react';
 import Link from 'next/link';
 
 import { select } from '@/state/reducers/feedbacksSlice';
 
-import { useAppSelector, useAppDispatch } from '@/state/hooks';
+import { useAppSelector } from '@/state/hooks';
 
 import Header from '@/components/layout/Header';
 import FeedbackPanel from '@/components/feedback/FeedbackPanel';
 import Form from '@/components/form/Form';
 import ModalBg from '@/components/ModalBg';
 
-const FeedBacks = () => {
-  const { feedbacks } = useAppSelector(select);
+import NoFeedback from '@/components/feedback/NoFeedback';
 
-  return feedbacks.map((feedback, idx) => {
-    return (
-      <Link href={`/post/${feedback.id}`} key={idx}>
-        <FeedbackPanel
-          customStyles="w-11/12 mt-5 mx-auto lg:w-full lg:mt-5"
-          feedback={feedback}
-          key={idx}
-        />
-      </Link>
-    );
-  });
+const FeedBacks = () => {
+  const { feedbacks, filteredFeedbacks } = useAppSelector(select);
+  const pageFeedbacks =
+    filteredFeedbacks.length === 0 ? feedbacks : filteredFeedbacks;
+
+  if (typeof filteredFeedbacks === 'string') {
+    return <NoFeedback />;
+  }
+
+  if (Array.isArray(pageFeedbacks)) {
+    return pageFeedbacks.map((feedback, idx) => {
+      return (
+        <Link href={`/post/${feedback.id}`} key={idx}>
+          <FeedbackPanel
+            customStyles="w-11/12 mt-5 mx-auto lg:w-full lg:mt-5"
+            feedback={feedback}
+            key={idx}
+          />
+        </Link>
+      );
+    });
+  }
 };
 
 export default function Home() {

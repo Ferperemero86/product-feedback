@@ -1,10 +1,11 @@
 import { FilterFeedback } from '@/state/types';
-import { useState, MouseEvent } from 'react';
+import { useState } from 'react';
 
 interface SelectFieldProps {
   customStyles?: string;
   options: FilterFeedback[];
-  sortFeedbacks: (label: string) => void;
+  sortFeedbacks?: (label: string) => void;
+  getFieldData?: (label: string) => void;
 }
 
 interface OptionsProps {
@@ -20,9 +21,7 @@ const Options = ({ options, selectOption }: OptionsProps) => {
         onClick={() => selectOption(option.label)}
         key={option.label}
       >
-        <span className="font-normal text-secondary-fourth">
-          {option.label}
-        </span>
+        <span className="font-normal text-red">{option.label}</span>
       </li>
     );
   });
@@ -32,6 +31,7 @@ export default function SelectField({
   customStyles,
   options,
   sortFeedbacks,
+  getFieldData,
 }: SelectFieldProps) {
   const [selected, setSelected] = useState<string>(options[0].label);
   const [isOptionsActive, setOptionsActive] = useState<boolean>(false);
@@ -43,20 +43,24 @@ export default function SelectField({
   const selectOption = (label: string) => {
     setSelected(label);
     setOptionsActive(false);
-    sortFeedbacks(label);
-    console.log(label);
+    if (getFieldData) {
+      getFieldData(label);
+    }
+    if (sortFeedbacks) {
+      sortFeedbacks(label);
+    }
   };
 
   return (
-    <div className={`${customStyles} relative hover:cursor-pointer`}>
-      <div className={`h-4 w-full flex items-center`} onClick={showOptions}>
-        <p className="text-fourth-second pl-2 pr-8">{selected}</p>
+    <div className={`relative hover:cursor-pointer ${customStyles}`}>
+      <div className={`h-full w-full flex items-center`} onClick={showOptions}>
+        <p className=" pl-2 pr-8 w-full text-inherit">{selected}</p>
         <div className="arrow"></div>
       </div>
       <ul
         className={`${
           isOptionsActive ? `block` : `hidden`
-        } absolute top-6 border bg-white w-[200px] list-none`}
+        } absolute border bg-white min-w-[200px] w-full list-none`}
       >
         <Options options={options} selectOption={selectOption} />
       </ul>

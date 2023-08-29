@@ -186,7 +186,7 @@ export default function RoadMap() {
   const [activeLink, setActiveLink] = useState('Planned');
   const [isFormShowing, setFormShowing] = useState<boolean>(false);
   const { feedbacks } = useAppSelector(select);
-  console.log('feedbacks', feedbacks);
+
   const plannedFeedbacks = feedbacks.filter(
     (feedback) => feedback.status === 'planned',
   );

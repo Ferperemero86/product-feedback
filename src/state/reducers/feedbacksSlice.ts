@@ -1,14 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '@/state/store';
 
-import { Feedback, FeedbacksPayload } from '@/state/types';
+import { Feedback } from '@/state/types';
 
 interface InitialState {
   feedbacks: Feedback[];
+  filteredFeedbacks: Feedback[] | string;
 }
 
 const initialState: InitialState = {
   feedbacks: [],
+  filteredFeedbacks: [],
 };
 
 export const feedbacksSlice = createSlice({
@@ -18,6 +20,12 @@ export const feedbacksSlice = createSlice({
   reducers: {
     updateFeedbacks: (state, action: PayloadAction<Feedback[]>) => {
       state.feedbacks = action.payload;
+    },
+    updateFilteredFeedbacks: (
+      state,
+      action: PayloadAction<Feedback[] | string>,
+    ) => {
+      state.filteredFeedbacks = action.payload;
     },
     editFeedback: (state, action: PayloadAction<Feedback>) => {
       const updatedFeedback = action.payload;
@@ -34,10 +42,12 @@ export const feedbacksSlice = createSlice({
     },
     createFeedback: (state, action: PayloadAction<Feedback>) => {
       const updatedFeedback = action.payload;
-      const feedbacks = [...state.feedbacks];
-      const updatedFeedbacks = [...feedbacks, updatedFeedback];
 
-      state.feedbacks = updatedFeedbacks;
+      state.feedbacks = [...state.feedbacks, updatedFeedback];
+
+      if (Array.isArray(state.filteredFeedbacks)) {
+        state.filteredFeedbacks = [...state.filteredFeedbacks, updatedFeedback];
+      }
     },
     deleteFeedback: (state, action: PayloadAction<number>) => {
       const feedbackId = action.payload;
@@ -50,8 +60,13 @@ export const feedbacksSlice = createSlice({
   },
 });
 
-export const { updateFeedbacks, editFeedback, deleteFeedback, createFeedback } =
-  feedbacksSlice.actions;
+export const {
+  updateFeedbacks,
+  editFeedback,
+  deleteFeedback,
+  createFeedback,
+  updateFilteredFeedbacks,
+} = feedbacksSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const select = (state: RootState) => state.feedbacksSlice;

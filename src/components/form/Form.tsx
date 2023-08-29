@@ -8,6 +8,7 @@ import {
   createFeedback,
   deleteFeedback,
   select,
+  updateFeedbacks,
 } from '@/state/reducers/feedbacksSlice';
 
 import { useAppSelector, useAppDispatch } from '@/state/hooks';
@@ -87,8 +88,18 @@ export default function Form({
   feedback,
   cancelForm,
 }: FormProps) {
-  const categoriesList = ['UI', 'UX', 'Enhancement', 'Bug', 'Feature'];
-  const statusList = ['planned', 'in-progress', 'live'];
+  const categoriesList = [
+    { label: 'UI', value: 'ui' },
+    { label: 'UX', value: 'ux' },
+    { label: 'Enhancement', value: 'enhancement' },
+    { label: 'Bug', value: 'bug' },
+    { label: 'Feature', value: 'feature' },
+  ];
+  const statusList = [
+    { label: 'Planned', value: 'planned' },
+    { label: 'In-progress', value: 'in-progress' },
+    { label: 'Live', value: 'live' },
+  ];
   const formTitle = feedback?.title ? feedback.title : 'Create New Feedback';
   const formDescription = feedback?.description ? feedback.description : '';
   const { push } = useRouter();
@@ -96,20 +107,20 @@ export default function Form({
   const dispatch = useAppDispatch();
   const { feedbacks } = useAppSelector(select);
   const [title, setTitle] = useState<string>(formTitle);
-  const [category, setCategory] = useState<string>(categoriesList[0]);
-  const [status, setStatus] = useState<string>(statusList[0]);
+  const [category, setCategory] = useState<string>(categoriesList[0].label);
+  const [status, setStatus] = useState<string>(categoriesList[0].label);
   const [description, setDescription] = useState<string>(formDescription);
 
   const addTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(() => e.target.value);
   };
 
-  const addCategory = (e: ChangeEvent<HTMLSelectElement>) => {
-    setCategory(() => e.target.value);
+  const addCategory = (label: string) => {
+    setCategory(() => label.toLowerCase());
   };
 
-  const addStatus = (e: ChangeEvent<HTMLSelectElement>) => {
-    setStatus(() => e.target.value);
+  const addStatus = (label: string) => {
+    setStatus(() => label.toLowerCase());
   };
 
   const addDetails = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -174,9 +185,9 @@ export default function Form({
         <p className="font-semibold text-sm text-secondary-third">Category</p>
         <p className="mt-2">Choose a category for your feedback</p>
         <SelectField
-          onChange={addCategory}
+          getFieldData={addCategory}
           options={categoriesList}
-          customStyles="w-full bg-secondary-second mt-4"
+          customStyles="w-full bg-secondary-second mt-4 h-12"
         />
       </div>
       {type === 'edit' && (
@@ -186,9 +197,9 @@ export default function Form({
           </p>
           <p className="mt-2">Change feature state</p>
           <SelectField
-            onChange={addStatus}
+            getFieldData={addStatus}
             options={statusList}
-            customStyles="w-full bg-secondary-second mt-4"
+            customStyles="w-full bg-secondary-second mt-4 h-12"
           />
         </div>
       )}
