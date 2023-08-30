@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, MouseEvent } from 'react';
+import { MouseEventHandler, useState, MouseEvent } from 'react';
+import { useRouter } from 'next/navigation';
 
 import { useAppSelector } from '@/state/hooks';
 import { select } from '@/state/reducers/feedbacksSlice';
@@ -18,12 +19,19 @@ interface RoadMapHeader {
 }
 
 const RoadMapHeader = ({ showForm }: RoadMapHeader) => {
+  const router = useRouter();
+
+  const goToPreviousPage: MouseEventHandler<HTMLAnchorElement> = (e) => {
+    e.preventDefault();
+    router.back();
+  };
+
   return (
     <header className="p-6 bg-fourth-first flex justify-between items-center">
       <div className="">
-        <Link href="/" className="text-white font-bold text-sm underline">
+        <a className="text-white underline" onClick={goToPreviousPage}>
           Go Back
-        </Link>
+        </a>
         <h1 className="text-white text-lg">Roadmap</h1>
       </div>
       <Button
@@ -139,12 +147,16 @@ const RoadMapFeedbacks = ({
         } md:block`}
       >
         {plannedFeedbacks.map((feedback, idx) => {
+          const { id } = feedback;
+
           return (
-            <FeedbackPanel
-              feedback={feedback}
-              key={idx}
-              customStyles="w-11/12 border-t-4 border-tertiary-first mt-10"
-            />
+            <Link href={`/post/${id}`} key={idx}>
+              <FeedbackPanel
+                feedback={feedback}
+                key={idx}
+                customStyles="w-11/12 border-t-4 border-tertiary-first mt-10"
+              />
+            </Link>
           );
         })}
       </div>
@@ -154,12 +166,16 @@ const RoadMapFeedbacks = ({
         } md:block`}
       >
         {inProgressFeedbacks.map((feedback, idx) => {
+          const { id } = feedback;
+
           return (
-            <FeedbackPanel
-              feedback={feedback}
-              key={idx}
-              customStyles="w-11/12 border-t-4 border-primary-first mt-10"
-            />
+            <Link href={`/post/${id}`} key={idx}>
+              <FeedbackPanel
+                feedback={feedback}
+                key={idx}
+                customStyles="w-11/12 border-t-4 border-primary-first mt-10"
+              />
+            </Link>
           );
         })}
       </div>
@@ -169,12 +185,16 @@ const RoadMapFeedbacks = ({
         } md:block`}
       >
         {liveFeedbacks.map((feedback, idx) => {
+          const { id } = feedback;
+
           return (
-            <FeedbackPanel
-              feedback={feedback}
-              key={idx}
-              customStyles="w-11/12 border-t-4 border-tertiary-second mt-10"
-            />
+            <Link href={`/post/${id}`} key={idx}>
+              <FeedbackPanel
+                feedback={feedback}
+                key={idx}
+                customStyles="w-11/12 border-t-4 border-tertiary-second mt-10"
+              />
+            </Link>
           );
         })}
       </div>

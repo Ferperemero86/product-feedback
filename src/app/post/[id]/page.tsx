@@ -3,9 +3,10 @@
 import { useState } from 'react';
 
 import { select } from '@/state/reducers/feedbacksSlice';
-import { useAppSelector, useAppDispatch } from '@/state/hooks';
+import { useAppSelector } from '@/state/hooks';
 
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+
 import Button from '@/components/form/Button';
 import FeedbackPanel from '@/components/feedback/FeedbackPanel';
 import CommentPanel from '@/components/feedback/CommentPanel';
@@ -38,6 +39,7 @@ export default function Page({ params }: PageProps) {
   const [isEditFormShowing, setEditFormShowing] = useState<boolean>(false);
   const { feedbacks } = useAppSelector(select);
 
+  const router = useRouter();
   const feedbackId = parseInt(params.id);
 
   const feedback = feedbacks.find((item) => item.id === feedbackId);
@@ -49,6 +51,13 @@ export default function Page({ params }: PageProps) {
 
   const showForm = () => {
     setEditFormShowing(() => true);
+  };
+
+  const goToPreviousPage = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+  ) => {
+    e.preventDefault();
+    router.back();
   };
 
   return (
@@ -66,7 +75,12 @@ export default function Page({ params }: PageProps) {
       )}
       <div className="w-11/12 mx-auto">
         <div className="flex justify-between items-center py-4">
-          <Link href="/">Go Back</Link>
+          <a
+            className="text-secondary-fourth underline"
+            onClick={goToPreviousPage}
+          >
+            Go Back
+          </a>
           <Button
             onClick={showForm}
             text="Edit Feedback"
