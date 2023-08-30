@@ -1,10 +1,24 @@
 import Link from 'next/link';
 
+import { useAppSelector } from '@/state/hooks';
+import { select } from '@/state/reducers/feedbacksSlice';
+
 interface Props {
   customStyles: string;
 }
 
 export default function StatusFilter({ customStyles }: Props) {
+  const { feedbacks } = useAppSelector(select);
+  const plannedFeedbacks = feedbacks.filter(
+    (feedback) => feedback.status === 'planned',
+  );
+  const inProgressFeedbacks = feedbacks.filter(
+    (feedback) => feedback.status === 'in-progress',
+  );
+  const liveFeedbacks = feedbacks.filter(
+    (feedback) => feedback.status === 'live',
+  );
+
   return (
     <div className={`${customStyles}`}>
       <div className="flex justify-between">
@@ -20,19 +34,19 @@ export default function StatusFilter({ customStyles }: Props) {
         <li className="mt-2 marker:text-tertiary-first">
           <div className="flex justify-between text-secondary-fourth">
             <p>Planned</p>
-            <span className="font-bold">2</span>
+            <span className="font-bold">{plannedFeedbacks.length}</span>
           </div>
         </li>
         <li className="mt-2 marker:text-primary-first">
           <div className="flex justify-between text-secondary-fourth">
             <p>In-Progress</p>
-            <span className="font-bold">3</span>
+            <span className="font-bold">{inProgressFeedbacks.length}</span>
           </div>
         </li>
         <li className="mt-2 marker:text-tertiary-second">
           <div className="flex justify-between text-secondary-fourth">
             <p>Live</p>
-            <span className="font-bold">1</span>
+            <span className="font-bold">{liveFeedbacks.length}</span>
           </div>
         </li>
       </ul>

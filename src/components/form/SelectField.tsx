@@ -1,5 +1,5 @@
 import { FilterFeedback } from '@/state/types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface SelectFieldProps {
   customStyles?: string;
@@ -50,6 +50,10 @@ export default function SelectField({
       sortFeedbacks(label);
     }
   };
+
+  useEffect(() => {
+    selectOption(selected);
+  }, []);
 
   return (
     <div className={`relative hover:cursor-pointer ${customStyles}`}>
