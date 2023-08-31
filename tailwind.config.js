@@ -39,6 +39,7 @@ module.exports = {
         fourth: {
           first: '#373F68',
           second: '#f2f4fe',
+          third: '#c75af6',
         },
       },
     },

@@ -26,8 +26,13 @@ p {
   color: #647196;
 }
 
-a {
+a,
+button {
   cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
 .arrow {

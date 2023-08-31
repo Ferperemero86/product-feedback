@@ -1,5 +1,7 @@
 import { User } from '@/state/types';
 
+import { data } from '../../data';
+
 import {
   createContext,
   Dispatch,
@@ -14,9 +16,7 @@ export interface UserContextProps {
 }
 
 const defaultState = {
-  user: {
-    LoggedIn: false,
-  },
+  user: data.currentUser,
   setUser: (user: User) => {},
 };
 

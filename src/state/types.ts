@@ -34,7 +34,9 @@ export type Feedback = {
 };
 
 export type User = {
-  LoggedIn: boolean;
+  image: string;
+  name: string;
+  username: string;
 };
 
 export type FilterFeedback = {

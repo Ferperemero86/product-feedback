@@ -57,6 +57,20 @@ export const feedbacksSlice = createSlice({
         (feedback) => feedback.id !== feedbackId,
       );
     },
+    addComment: (state, action: PayloadAction<Feedback>) => {
+      const feedbacks = [...state.feedbacks];
+      const newFeedback = action.payload;
+
+      const indexToUpdate = feedbacks.findIndex(
+        (obj) => obj.id === newFeedback.id,
+      );
+
+      if (indexToUpdate !== -1) {
+        feedbacks[indexToUpdate] = newFeedback;
+      }
+
+      state.feedbacks = feedbacks;
+    },
   },
 });
 
@@ -66,6 +80,7 @@ export const {
   deleteFeedback,
   createFeedback,
   updateFilteredFeedbacks,
+  addComment,
 } = feedbacksSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

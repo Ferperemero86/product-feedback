@@ -1,9 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, FormEvent, useContext } from 'react';
 
-import { select } from '@/state/reducers/feedbacksSlice';
-import { useAppSelector } from '@/state/hooks';
+import { UserContext } from '@/contexts/UserContext';
+
+import { select, addComment } from '@/state/reducers/feedbacksSlice';
+import { useAppSelector, useAppDispatch } from '@/state/hooks';
 
 import { useRouter } from 'next/navigation';
 
@@ -14,6 +16,7 @@ import Form from '@/components/form/Form';
 import ModalBg from '@/components/ModalBg';
 
 import { Comment, CommentParams } from '@/state/types';
+import AddComment from '@/components/feedback/AddComment';
 
 interface PageProps {
   params: CommentParams;
@@ -38,6 +41,8 @@ const Comments = ({ comments, customStyles }: CommentsProps) => {
 export default function Page({ params }: PageProps) {
   const [isEditFormShowing, setEditFormShowing] = useState<boolean>(false);
   const { feedbacks } = useAppSelector(select);
+  const { user } = useContext(UserContext);
+  const dispatch = useAppDispatch();
 
   const router = useRouter();
   const feedbackId = parseInt(params.id);
@@ -58,6 +63,26 @@ export default function Page({ params }: PageProps) {
   ) => {
     e.preventDefault();
     router.back();
+  };
+
+  const submit = (e: FormEvent<HTMLFormElement>, content: string) => {
+    e.preventDefault();
+
+    const comment = {
+      id: 1,
+      content,
+      user,
+    };
+
+    if (feedback?.comments) {
+      const feedbackCopy = { ...feedback };
+      const commentsCopy = [...feedback.comments, comment];
+
+      feedbackCopy.comments = commentsCopy;
+
+      dispatch(addComment(feedbackCopy));
+      console.log('submit', feedbackCopy);
+    }
   };
 
   return (
@@ -94,6 +119,11 @@ export default function Page({ params }: PageProps) {
           </div>
         </div>
       </div>
+      <AddComment
+        buttonText="Post Comment"
+        customStyles="w-11/12 mx-auto bg-white p-8"
+        onSubmit={submit}
+      />
     </main>
   );
 }
